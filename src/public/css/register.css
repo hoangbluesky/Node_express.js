@@ -1,0 +1,95 @@
+.div-form-register {
+    font-family: 'Poppins', 'Roboto', sans-serif !important;
+    background: linear-gradient(135deg, #dfe6e9, #b2bec3);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+.size-14 {
+    font-size: 14px;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 30px 25px !important;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    animation: slideIn 0.5s ease-out;
+    box-sizing: border-box;
+}
+
+.register-card h2 {
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #2d3436;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 1px solid #dfe6e9;
+    transition: all 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #b2bec3;
+    font-size: 0.9rem;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+.form-control:focus {
+    border-color: #0984e3;
+    box-shadow: 0 0 8px rgba(9, 132, 227, 0.2);
+}
+
+.btn-primary {
+    background: #0984e3;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #61a3e4;
+}
+
+.text-decoration-none {
+    color: #0984e3;
+    font-weight: 500;
+}
+
+.text-decoration-none:hover {
+    text-decoration: underline;
+}
+
+.span-fa-eye {
+    position: absolute;
+    right: 13px;
+    top: 8px;
+    cursor: pointer;
+}
+.error {
+    font-size: 14px;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,99 @@
+.div-form-login {
+    font-family: 'Poppins', 'Roboto', sans-serif !important;
+    background: linear-gradient(135deg, #dfe6e9, #b2bec3);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+  }
+  .size-14 {
+    font-size: 14px;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 400px; /* Giới hạn chiều rộng */
+    background: #ffffff; /* Nền trắng cho thẻ */
+    border-radius: 15px; /* Bo góc mềm mại */
+    padding: 30px 25px !important; /* Khoảng cách bên trong */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Bóng đổ mềm mại */
+    animation: slideIn 0.5s ease-out; /* Hiệu ứng xuất hiện mượt */
+  }
+
+  .login-card h2 {
+    font-weight: bold;
+    color: #2d3436;
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    font-weight: 500;
+    color: #2d3436;
+  }
+
+  .form-control {
+    border-radius: 10px;
+    border: 1px solid #dfe6e9;
+    transition: all 0.3s ease;
+  }
+  .form-control::placeholder {
+    color: #b2bec3; /* Màu placeholder mờ nhạt */
+    font-size: 0.9rem; /* Chữ nhỏ hơn */
+    font-style: italic; /* Kiểu chữ nghiêng (tùy chọn) */
+    opacity: 0.9; /* Độ mờ */
+  }
+
+  .form-control:focus {
+    border-color: #0984e3;
+    box-shadow: 0 0 8px rgba(9, 132, 227, 0.2);
+  }
+
+  .btn-primary {
+    background: #0984e3;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: background 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    background: #74b9ff;
+  }
+
+  .form-check-label {
+    color: #636e72;
+  }
+
+  .text-decoration-none {
+    color: #0984e3;
+    font-weight: 500;
+  }
+
+  .text-decoration-none:hover {
+    text-decoration: underline;
+  }
+  .error {
+    font-size: 14px;
+  }
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .span-fa-eye {
+    position: absolute;
+    right: 13px;
+    top: 8px;
+    cursor: pointer;
+  }
+  p strong {
+    font-size: 14px;
+  }
