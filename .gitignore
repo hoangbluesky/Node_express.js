@@ -1,5 +1,6 @@
 .env
 node_modules
+src/public
 .git
 .idea
 package-lock.json

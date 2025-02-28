@@ -23,11 +23,16 @@
     <div class="div-form-login">
         <div class="card login-card p-4">
             <h2 class="text-center mb-4">Login</h2>
+            <% if (errorLogin) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= errorLogin %>
+            </div>
+            <% } %>
             <form action="/login" method="POST">
                 <div class="mb-3 form-group">
                     <label for="email" class="form-label">Email Address</label>
-                    <input type="text" name="email" class="form-control" id="email" placeholder="Enter your email"
-                        required>
+                    <input type="text" name="email" class="form-control" id="email" value="<%= email %>" placeholder="Enter your email"
+                        required >
                     <span class="error"></span>
                 </div>
                 <div class="mb-3 form-group">
