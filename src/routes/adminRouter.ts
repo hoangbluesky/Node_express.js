@@ -39,4 +39,8 @@ router.get('/storeProduct/:id/delete',(req: Request, res: Response) => {
     AdminController.deleteProduct(req,res);
 });
 
+router.get('/cart',(req: Request, res: Response) => {
+    AdminController.showCart(req,res);
+});
+
 export default router;

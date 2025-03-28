@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express, Request, Response,NextFunction  } from "express";
 import dotenv from "dotenv";
 import bodyParser = require("body-parser");
 import cookieParser = require("cookie-parser");
@@ -7,14 +7,12 @@ import path = require("path");
 import adminRouter from "@routers/adminRouter";
 import { AppDataSource } from "@databases/data-source";
 import router from "@routers/index";
-
+import authMiddleware from "src/middleware/authMiddleware";
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
-
-
 
 // cấu hình bodyParser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -54,8 +52,9 @@ AppDataSource.initialize()
 .catch((err) => {
     console.error("Error Connect", err)
 })
-
 // routes
+app.use(authMiddleware);
+
 app.use('/admin', adminRouter);
 
 router(app);

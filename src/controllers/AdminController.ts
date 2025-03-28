@@ -70,7 +70,6 @@ class AdminController{
             console.log(error);
             res.status(500).send('Server Error');
         }
-
     }
     static async deleteProduct(req: Request, res: Response) {
         try {
@@ -81,6 +80,10 @@ class AdminController{
             console.log(error);
             res.status(500).send('Server Error');
         }
+    }
+
+    static async showCart(req: Request, res: Response) {
+        res.render('admin/cart');
     }
 }
 export default AdminController

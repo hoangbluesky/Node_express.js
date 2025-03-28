@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kết quả thanh toán</title>
+</head>
+<body>
+  <% if (code === '00') { %>
+    <h2>✅ Thanh toán thành công!</h2>
+  <% } else { %>
+    <h2>❌ Thanh toán thất bại. Mã lỗi: <%= code %></h2>
+  <% } %>
+</body>
+</html>
