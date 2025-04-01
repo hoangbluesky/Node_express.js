@@ -23,6 +23,9 @@
         <div class="card register-card p-4">
             <h2 class="text-center mb-4">Register</h2>
             <form action="/register" method="POST">
+                <% if (error) { %>
+                    <div class="alert alert-danger text-center"><%= error %></div>
+                <% } %>
                 <div class="mb-3 form-group">
                     <label for="name" class="form-label">Full Name</label>
                     <input type="text" name="fullName" class="form-control" id="name" placeholder="Enter your full name" required>

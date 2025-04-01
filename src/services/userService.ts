@@ -13,16 +13,31 @@ class UserService {
     }
 
     static async createUser(data: any) {
-        const {fullName, email, password,isActive} = data;
-        const newUser = new User();
-        newUser.fullName = fullName;
-        newUser.email = email;
-        newUser.password = password;
-        newUser.isActive = isActive ? isActive : false;
-
-        const roleUser = await roleRepository.findOne({ where: { id: 2 } });
-        newUser.role = roleUser || undefined;
-        return await userRepository.save(newUser);
+        const { fullName, email, password, isActive } = data;
+    
+        try {
+            console.log('Creating user with data:', data);
+    
+            const existingUser = await userRepository.findOne({ where: { email } });
+            if (existingUser) {
+                throw new Error('Email đã tồn tại');
+            }
+    
+            const newUser = new User();
+            newUser.fullName = fullName;
+            newUser.email = email;
+            newUser.password = password;
+            newUser.isActive = isActive ? isActive : false;
+    
+            const roleUser = await roleRepository.findOne({ where: { id: 2 } });
+            newUser.role = roleUser || undefined;
+    
+            const savedUser = await userRepository.save(newUser);
+    
+            return savedUser;
+        } catch (error) {
+            throw error;
+        }
     }
 
     static async getUser(data: any): Promise<User | null> {
@@ -39,8 +54,6 @@ class UserService {
         try {
             const cart = cartRepository.create(cartData);
             const savedCart = await cartRepository.save(cart);
-            
-            console.log("Cart saved successfully:", savedCart);
             return savedCart;
         } catch (error) {
             console.error("Error creating cart:", error);

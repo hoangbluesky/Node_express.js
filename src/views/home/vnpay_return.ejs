@@ -1,13 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-  <title>Kết quả thanh toán</title>
+  <meta charset="UTF-8">
+  <title>Thông báo thành công</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0fdf4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .box {
+      background-color: #d1fae5;
+      border: 1px solid #10b981;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #065f46;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #10b981;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .btn:hover {
+      background-color: #059669;
+    }
+  </style>
 </head>
 <body>
-  <% if (code === '00') { %>
-    <h2>✅ Thanh toán thành công!</h2>
-  <% } else { %>
-    <h2>❌ Thanh toán thất bại. Mã lỗi: <%= code %></h2>
-  <% } %>
+
+  <div class="box">
+    <% if (code === '00') { %>
+      <h1>🎉 Thanh toán thành công!</h1>
+      <a href="/home" class="btn">Trang chủ</a>
+    <% } else { %>
+      <h2>❌ Thanh toán thất bại. Mã lỗi: <%= code %></h2>
+      <a href="/home" class="btn">Quay lại</a>
+    <% } %>
+  </div>
+
 </body>
 </html>
+
+

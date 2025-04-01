@@ -37,7 +37,6 @@ class HomeController{
             image: product?.image,
             isPayment: false
         }
-        console.log(carts)
         UserService.createCarts(carts);
         res.render('home/cart',);
     }
@@ -62,13 +61,21 @@ class HomeController{
         res.render('auths/login', {email: email, errorLogin: errorLogin});
     }
     static async showRegister(req: Request, res: Response){
-        res.render('auths/register');
+        const error = false;
+        res.render('auths/register',{error});
     }
 //POST
     static async register(req: Request, res: Response){
-        UserService.createUser(req.body);
-        res.cookie('email', req.body.email ,{maxAge: 90000, httpOnly: true});
-        res.redirect('/login');
+        
+        try {
+            UserService.createUser(req.body);
+            res.cookie('email', req.body.email ,{maxAge: 90000, httpOnly: true});
+            res.redirect('/login');
+          }catch (error: any) {
+            res.render('auths/register', {
+              error: error.message,
+            });
+        }
     }
     static async login(req: Request, res: Response) {
         const user = await UserService.getUser(req.body);

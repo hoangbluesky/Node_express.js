@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
 import moment from 'moment';
-import qs from 'qs';
-import crypto from 'crypto';
 import dotenv from 'dotenv'
 dotenv.config()
 // Hàm sắp xếp thứ tự object theo key
@@ -18,10 +16,10 @@ const sortObject = (obj: Record<string, string>) => {
 
 export const createPayment = (req: Request, res: Response) => {
   const { amount, bankCode } = req.body;
-  const tmnCode = process.env.VNP_TMNCODE || 'K7XSRHN3';
-  const secretKey = process.env.VNP_HASHSECRET || 'HKHRAMXREBRBUTOIGKPNBWTAOZKFWZUY';
-  const vnpUrl = process.env.VNP_URL || 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-  const returnUrl = process.env.VNP_RETURN_URL || 'http://localhost:3000/payment/vnpay_return';
+  const tmnCode = 'BVN453L7';
+  const secretKey = 'DLVZTVEPUZZSBDJXMUYEXAQGZOLXZSLK';
+  const vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
+  const returnUrl = 'http://localhost:3000/payment/vnpay_return';  //process.env.VNP_RETURN_URL || 
 
   const date = moment().format('YYYYMMDDHHmmss');
   const orderId = moment().format('HHmmss');
@@ -46,22 +44,31 @@ const ipAddr = rawIp.replace('::ffff:', '').replace('::1', '127.0.0.1');
     vnp_IpAddr: ipAddr,
     vnp_CreateDate: date,
   };
-
   if (bankCode) {
     vnp_Params['vnp_BankCode'] = bankCode.toString();
   }
+    const paymentUrl = new URL(vnpUrl);
+    Object.entries(vnp_Params)
+    .sort(([key1], [key2]) => key1.toString().localeCompare(key2.toString()))
+    .forEach(([key, value]) => {
+        // Skip empty value
+        if (!value || value === "" || value === undefined || value === null) {
+        return;
+        }
 
-  const sortedParams = sortObject(vnp_Params);
+        paymentUrl.searchParams.append(key, value.toString());
+    });
 
-  const signData = qs.stringify(sortedParams, { encode: false });
-  const hmac = crypto.createHmac('sha256', secretKey);
-  const signed = hmac.update(signData, 'utf8').digest('hex');
-  sortedParams['vnp_SecureHash'] = signed;
+    var crypto = require("crypto");
+    const hmac = crypto.createHmac("sha512", secretKey);
+    const signed = hmac
+    .update(Buffer.from(paymentUrl.search.slice(1).toString(), "utf-8"))
+    .digest("hex");
 
-  const paymentUrl = `${vnpUrl}?${qs.stringify(sortedParams, { encode:true })}`;
-  console.log('🔗 Redirecting to:', paymentUrl);
-    console.log(sortedParams);
-  res.redirect(paymentUrl);
+    paymentUrl.searchParams.append("vnp_SecureHash", signed);
+    res.redirect(paymentUrl.toString());
+
+    
 };
 
 export const vnpayReturn = (req: Request, res: Response) => {
@@ -71,22 +78,21 @@ export const vnpayReturn = (req: Request, res: Response) => {
   delete vnp_Params['vnp_SecureHashType'];
 
   const secretKey = process.env.VNP_HASHSECRET || '';
-  const sortedParams = sortObject(vnp_Params);
-  const signData = qs.stringify(sortedParams, { encode: false });
+
+  // Sắp xếp tham số theo key
+  const sortedParams = Object.entries(vnp_Params)
+    .sort(([key1], [key2]) => key1.localeCompare(key2))
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
+
+  // Tạo chữ ký
+  const crypto = require('crypto');
   const hmac = crypto.createHmac('sha512', secretKey);
-  const signed = hmac.update(signData, 'utf-8').digest('hex');
-
-  console.log('🔐 Received Hash:', secureHash);
-  console.log('🔏 Generated Hash:', signed);
-
-  if (secureHash === signed) {
-    // Thành công
-    res.render('home/vnpay_return.ejs', { code: vnp_Params['vnp_ResponseCode'] });
-  } else {
-    // Sai checksum
-    res.status(400).render('home/vnpay_return.ejs', { code: '97' }); // 97: Checksum sai
-  }
+  const signed = hmac.update(Buffer.from(sortedParams, 'utf-8')).digest('hex');
+  res.render('home/vnpay_return.ejs', { code: vnp_Params['vnp_ResponseCode'] });
 };
+
+
 export const showPayments = (req: Request, res: Response) => {
     res.json('payment');
 }
